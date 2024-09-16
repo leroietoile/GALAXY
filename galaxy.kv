@@ -1,0 +1,84 @@
+#: import menu menu
+
+#InputUserNameWindow:
+MainWidget:
+
+<MainWidget>:
+    input_window: input_window
+    text_input: text_input
+    canvas.before:
+        Rectangle:
+            source: 'images/bg1.jpg'
+            size: self.size
+            pos: self.pos
+    menuscreen: menuscreen
+
+    MenuScreen:
+        id: menuscreen
+
+    Label:        
+        text: "score: " + root.score
+        size_hint: .15, None
+        height: dp(50)
+        pos_hint: {"left": 1, "top": 1}
+        font_size: dp(25)
+        font_name: "fonts/Lcd.ttf"
+
+    InputUserNameWindow:
+        id: input_window
+        size_hint: .5, .5
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+        BoxLayout:
+            size_hint: .8, .8
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: "vertical"
+            spacing: dp(50)
+
+            TextField:
+                id: text_input
+                size_hint: 1, None
+                height: dp(60)
+                pos_hint: {"center_x": .5, "center_y": .5}
+                text: "Enter user name"
+                background_color: (1, 1, 1) if self.focus else (.8, .8, .8)
+                multiline: False
+                # on_text_validate: root.validate_input(self)
+                disabled: self.parent.parent.window_disabled
+
+            Button:
+                size_hint: .5, None
+                height: dp(30)
+                pos_hint: {"center_x": .5, "center_y": .5}
+                text: "Commit"
+                background_color: .8, 0, 0
+                on_press: root.validate_name_given(self)
+
+<TextField>:             
+    
+<InputUserNameWindow>:
+    canvas.before:
+        Color:
+            rgb: 0, 0, 0
+        Rectangle:
+            size: self.size
+            #pos: self.pos
+
+    ButtonModel:
+        size_hint: None, None 
+        size: dp(20), dp(20)
+        pos: root.width - self.size[0] - dp(10), root.height - self.size[1] - dp(10)
+        on_press: root.close_textinput_window(self)
+
+        canvas.after:           
+            Rectangle:
+                source: "images/close_window.png"
+                pos: self.pos
+                size: self.size
+
+<ButtonModel@Button>:
+    text: ""
+    background_normal: ""
+    background_down: ""
+    background_color: 0, 0, 0, 0
+

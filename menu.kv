@@ -1,0 +1,151 @@
+#: import utils kivy.utils
+
+<MenuScreen>:
+    id: menu_screen
+    game_over_box: game_over_box
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .8
+        Rectangle:
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(50)
+
+        BoxLayout: 
+            size_hint: 1, None
+            height: dp(50)
+            pos_hint: {"right": 1, "top": 1}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, .2
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Label:
+                text: ""
+                size_hint: .4, 1
+
+            Label:
+                text: "record       " + root.parent.record
+                font_name: 'fonts/Eurostile.ttf'
+                bold: True
+                color: utils.get_color_from_hex("#F5AF91")
+            Label:
+                text: root.parent.record_man
+                bold: True
+                font_size: dp(18)
+                font_name: 'fonts/Eurostile.ttf'
+                color: utils.get_color_from_hex("#F5AF91")
+                
+        BoxLayout:
+            id: game_over_box
+            opacity: 0
+            orientation: "vertical"
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint: 1, .5
+            Label:
+                text: "g  a  m  e       o  v  e  r"
+                color: 1, 0, 0
+                font_size: dp(40)
+                bold: True
+
+        BoxLayout:
+            # orientation: "vertical"
+            # size_hint: .4, .5
+            # pos_hint: {'center_x': .5, 'center_y': .5}
+            Label:
+                text: ""
+                size_hint: .4, 1
+                # CanvasTest:
+            BoxLayout:
+                spacing: dp(10)
+                UserToggle:
+                    text: root.parent.user_list[0] 
+                
+                UserToggle:
+                    text: root.parent.user_list[1] 
+                
+                UserToggle:
+                    text: root.parent.user_list[2] 
+                
+                Button:
+                    color: 0, 0, 0
+                    text: "+"
+                    # color: root.parent.btn_color[self.text]
+                    canvas.before:
+                        Color:
+                            rgb: root.parent.btn_color[self.text]
+                        Ellipse:
+                            source: root.parent.user_bg_source[self.text]
+                            size: self.height, self.height
+                            pos: self.pos
+                    on_press: root.parent.add_user(self)
+                    background_normal: ""
+                    background_color: 0, 0, 0, 0
+                    size_hint: None, None
+                    size: dp(30), dp(30)
+                    pos_hint: {"center_x": .5, "center_y": .25}
+                    bold: True
+            Label:
+                text: ""
+                size_hint: .4, 1
+
+        Button:
+            text: root.parent.btn_text
+            color: 1, .3, .5
+            size_hint: .4, None
+            font_size: dp(20)
+            height: dp(30)
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_press: root.parent.start_game()
+            disabled: root.parent.start_btn_disabled
+            background_normal: ""
+            background_color: 1, .3, .5, 0
+            font_name: 'fonts/Eurostile.ttf'
+            bold: True
+            
+
+        Label:
+            text: "G    A   L   A   X   Y"
+            pos_hint: {'center_x': .5, 'center_y': .2}
+            size_hint: 1, 2
+            font_name: 'fonts/sackers-Gothic-Std-Light.ttf'
+            font_size: dp(60)
+            bold: True
+
+
+<UserToggle@ToggleButton>:
+    canvas.before:
+        Color:
+            rgb: root.parent.parent.parent.parent.parent.btn_color[root.text]
+        Rectangle:
+            #source: "images/Btn_border_white.png" if root.parent.parent.parent.parent.parent.new_user_added else root.parent.parent.parent.parent.parent.user_bg_source[root.text]
+            
+            source: root.parent.parent.parent.parent.parent.user_bg_source[root.text]
+            size: self.size
+            pos: self.pos
+
+    group: 'user_btn'
+    color: root.parent.parent.parent.parent.parent.btn_color[root.text]
+    # state: root.parent.parent.parent.parent.parent.toggles_state
+    on_state: root.parent.parent.parent.parent.parent.choose_user(self)
+    background_normal: ""
+    background_color: 0, 0, 0, 0
+    size_hint: 1, .5
+    font_size: dp(10)
+    bold: True
+    # padding: dp(10), dp(2)    
+    # size: self.texture_size
+    # padding: dp(30), dp(5)
+
+
+<CanvasTest@Widget>:
+    canvas.before:
+        Color:
+            rgb: 1, 0, 0
+        Rectangle:
+            size: root.parent.size
+            pos: root.parent.pos
