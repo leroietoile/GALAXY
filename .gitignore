@@ -1,3 +1,3 @@
-/build/
-/__pycache__/
-/.idea/
+build/
+__pycache__/
+.idea/
